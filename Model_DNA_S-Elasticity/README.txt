@@ -1,7 +1,7 @@
 Execute as:
 python ModelPrediction.py file_with_sequences.txt
 
-file_with_sequences.txt must contain a single column, no spaces, with any amount of sequences of anu length.
+file_with_sequences.txt must contain a single column, no spaces, with any amount of sequences of any length.
 
 Output is S, error, of all sequences contained in file_with_sequences.txt, in the same order.
 
