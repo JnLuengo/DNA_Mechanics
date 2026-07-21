@@ -4,6 +4,7 @@ import crk
 import stilde
 import sys
 
+"""
 if len(sys.argv)!=2:
     raise ValueError("Error: Input required: file name")
 filename = sys.argv[1]
@@ -26,4 +27,26 @@ with open(filename, "r") as file:
         #print(allsl)
         #print(allKcr)
         print(allSt[0], allSt[1])
+"""
+        
 
+from src.predictor import Sequence
+
+def main():
+
+    if len(sys.argv)!=2:
+        raise ValueError("Error: Input required: file name")
+    filename = sys.argv[1]
+
+    with open(filename, "r") as file:
+        
+        for sequence in file:
+            
+            sequence = sequence.strip()
+            
+            seq = Sequence(sequence)
+            
+            seq.prediction_Stilde()
+
+if __name__ == "__main__":
+    main()
