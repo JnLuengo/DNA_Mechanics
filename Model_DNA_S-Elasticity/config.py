@@ -1,3 +1,10 @@
+COMPLEMENTARY_BASES = {
+    "A" : "T",
+    "T" : "A",
+    "C" : "G",
+    "G" : "C" 
+}
+
 VALID_BASES = {"A", "T", "C", "G"}
 
 STEPS = ["AA","GG","AC","CA","AG","GA","AT","TA","CG","GC"]
