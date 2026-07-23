@@ -3,12 +3,39 @@ from config import VALID_BASES, COMPLEMENTARY_BASES, STEPS, HK, LK, ERRHK, ERRLK
 from config import PARM_KBETA, ERRPARM_KBETA, KSTEPS, ERRKSTEPS
 
 class Sequence:
+    """
+    Represents a DNA sequence and provides methods to compute sequence
+    composition and predict structural and mechanical properties based on
+    step-based physical models.
+
+    Parameters
+    ----------
+    sequence : str
+        DNA sequence composed the bases: A, T, C, G.
+    """
     
     def __init__(self, sequence):
+        """
+        Initialize a Sequence object.
+
+        Parameters
+        ----------
+        sequence : str
+            DNA sequence.
+        """
         self.sequence = sequence
 
 
     def validate(self):
+        """
+        Checks that DNA sequence contains only valid bases.
+
+        Raises
+        ------
+        ValueError
+            If the sequence contains characters other than A, T, C, G, 
+            or corresponding lower cases. 
+        """
 
         sequence = self.sequence
         if any (base.upper() not in VALID_BASES for base in sequence):
@@ -16,6 +43,18 @@ class Sequence:
 
 
     def composition(self):
+        """
+        Computes step (dinucleotide) composition of the DNA sequence.
+
+        List of possible steps provided in STEPS (list).
+        Reverse-complement equivalent steps are counted together.
+
+        Returns
+        -------
+        list of int
+            List containing the occurrence count of each step in
+            the order defined by STEPS.
+        """
     
         sequence = self.sequence.upper()
         comp = [0]*10
@@ -31,6 +70,16 @@ class Sequence:
 
 
     def prediction_crookedness(self):
+        """
+        Predict DNA crookedness and its error.
+
+        Prediction based on steps-based model, with parameters in HK and LK.
+
+        Returns
+        -------
+        list of float
+            Two-element list containing crookedness and its error.
+        """
         
         comp = self.composition()
         num = 0
@@ -57,6 +106,16 @@ class Sequence:
 
 
     def prediction_sumlj(self):
+        """
+        Compute the total contour length contribution of the DNA sequence.
+
+        The contour length is obtained as the sum of step lengths.
+
+        Returns
+        -------
+        list of float
+            Two-element list containing total contour length and its error.
+        """
         
         comp = self.composition()
         slj=0
@@ -73,6 +132,17 @@ class Sequence:
 
 
     def prediction_Kbeta(self):
+        """
+        Predicts the crookedness stiffness.
+
+        The prediction is obtained from the phenomenological exponential relationship
+        between DNA crookedness and its stiffness.
+
+        Returns
+        -------
+        list of float
+            Two-element list containing predicted crookedness stiffness and its error.
+        """
 
         allcr = self.prediction_crookedness()
 
@@ -88,6 +158,18 @@ class Sequence:
 
 
     def prediction_Stilde(self):
+        """
+        Predict the effective DNA stretch modulus.
+
+        The prediction combines the crookedness stiffness, contour length, 
+        and step-level elastic parameters.
+
+        Returns
+        -------
+        list of float
+            Two-element list containing predicted effective stretch modulus 
+            and its error.
+        """
 
         comp = self.composition()
         allKcr = self.prediction_Kbeta()
