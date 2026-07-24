@@ -1,6 +1,7 @@
 import sys
 from tensorflow.keras.models import load_model
 import numpy as np
+from pathlib import Path
 
 lp_mean = 57.092876401100135
 lp_std = 7.27999126659362
@@ -12,7 +13,8 @@ if len(sys.argv) < 2:
 filename = sys.argv[1]
 
 # Load model
-model = load_model("final_model_ANN.keras")
+ROOT = Path(__file__).resolve().parent
+model = load_model(ROOT / "final_model_ANN.keras")
 #print(model.summary()) # Model summary
 
 postrims = ["AAA", "AAC", "AAG", "AAT", "ACA", "ACC", "ACG", "ACT", "AGA", "AGC", "AGG", 
