@@ -1,6 +1,7 @@
 from config import VALID_BASES, COMPLEMENTARY_BASES, TRIMERS, LP_MEAN, LP_STD
 from tensorflow.keras.models import load_model
 import numpy as np
+from pathlib import Path
 
 class Sequence:
     """
@@ -14,7 +15,8 @@ class Sequence:
         DNA sequence composed the bases: A, T, C, G.
     """
 
-    model = load_model("final_model_ANN.keras")
+    ROOT = Path(__file__).resolve().parent.parent
+    model = load_model(ROOT / "final_model_ANN.keras")
 
     def __init__(self, sequence):
         """
