@@ -4,7 +4,7 @@ from src.models import Sequence
 def main():
     """
     Receives file path, validates the existence of the file,
-    the reads DNA sequences as lines. For each DNA sequence,
+    then reads DNA sequences as lines. For each DNA sequence,
     validates that it contains only valid characters (A, T, C, G),
     then executes prediction of the effective DNA stretch modulus.
 
