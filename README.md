@@ -60,7 +60,7 @@ Sequences **dataset**.
 
 ### Motif sequences
 
-Sequences are given with **CGCGCGCGCG** handles.
+Sequences are given with **CGCGCGCGCG** handles on each side.
 
 - *basepairDep.txt* : set of basepair sequences.
 
@@ -70,11 +70,11 @@ Sequences are given with **CGCGCGCGCG** handles.
 
 ### Testing sequences
 
-Set of testing sequences in *testing.txt*, given with **CGCGCGCGCG** handles.
+Set of testing sequences in *testing.txt*, given with **CGCGCGCGCG** handles on each side.
 
 ### Nucleosomal sequences
 
-Set of nucleosomal sequences in *nucleosomal.txt*, given with **CGCGCGCGCG** handles.
+Set of nucleosomal sequences in *nucleosomal.txt*, given with **CGCGCGCGCG** handles on each side.
 
 ### Occupancy sequences
 
