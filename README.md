@@ -1,4 +1,4 @@
-# Predictors of DNA Mechanical properties.
+# Predictors of DNA Mechanical properties and sequences dataset
 
 ---
 
@@ -51,3 +51,32 @@ Requires **numpy** and **tensorflow**.
 - 4 hidden, dense layers with ReLU activation. Neurons: 200 - 100 - 50 - 25.
 
 - Output layer with single neuron and linear activation.
+
+---
+
+## Data
+
+Sequences **dataset**.
+
+### Motif sequences
+
+Sequences are given with **CGCGCGCGCG** handles.
+
+- *basepairDep.txt* : set of basepair sequences.
+
+- *stepDep.txt* : set of step sequences.
+
+- *trimDep.txt* : set of trimer sequences.
+
+### Testing sequences
+
+Set of testing sequences in *testing.txt*, given with **CGCGCGCGCG** handles.
+
+### Nucleosomal sequences
+
+Set of nucleosomal sequences in *nucleosomal.txt*, given with **CGCGCGCGCG** handles.
+
+### Occupancy sequences
+
+List of transcription start sites and their associated genomic sequences in *occupancySequences.txt*. Each sequence spans ±1000 bp around the TSS and is reported in the 5′→3′ transcriptional direction (i.e. reverse-complemented for genes on the minus strand).
+
