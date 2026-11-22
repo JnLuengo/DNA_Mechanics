@@ -18,6 +18,11 @@ python3 ModelPrediction.py file_with_sequences.txt
 
 - Output is S, error, of all sequences contained in *file_with_sequences.txt*, in the same order.
 
+- The error is the uncertainty of the prediction due to the fitted parameters: Eq. 2 parameters from a bootstrap over
+  molecules (*data/kbeta_bootstrap.dat*, which includes their strong mutual correlations), plus the propagated errors of
+  the crookedness and step parameters. It does not include the scatter of individual sequences around the model
+  (rms relative difference between predicted and simulated stretch modulus: ~4 % for the testing sequences).
+
 - Code efficiency was tested with 1000000 random DNA sequences of 100 bps -> Time: 1m19.319s in 1 CPU.
 
 - Example input: *'ExampleSeq.txt'*.

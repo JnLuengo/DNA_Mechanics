@@ -1,6 +1,11 @@
 import math
+from pathlib import Path
+import numpy as np
 from config import VALID_BASES, COMPLEMENTARY_BASES, STEPS, HK, LK, ERRHK, ERRLK
-from config import PARM_KBETA, ERRPARM_KBETA, KSTEPS, ERRKSTEPS
+from config import PARM_KBETA, CSTEPS, ERRCSTEPS, KBETA_BOOTSTRAP_FILE
+
+# bootstrap replicates of (A, Kinf, k), loaded once
+KBETA_BOOTSTRAP = np.loadtxt(Path(__file__).resolve().parent.parent / KBETA_BOOTSTRAP_FILE)
 
 class Sequence:
     """
@@ -109,7 +114,8 @@ class Sequence:
         """
         Compute the total contour length contribution of the DNA sequence.
 
-        The contour length is obtained as the sum of step lengths.
+        The contour length is obtained as the sum of the projected step lengths h_Q
+        (numerator of Eq. 3), consistently with the fit of the step compliances.
 
         Returns
         -------
@@ -122,8 +128,8 @@ class Sequence:
         errslj=0
 
         for k in range(10):
-            slj += comp[k]*LK[k]
-            errslj += (comp[k]*ERRLK[k])**2
+            slj += comp[k]*HK[k]          # contour length = sum of h_Q (as in the fit of the step compliances)
+            errslj += (comp[k]*ERRHK[k])**2
 
         errslj = math.sqrt(errslj)
         allslj = [slj, errslj]
@@ -148,8 +154,11 @@ class Sequence:
 
         Kcr = PARM_KBETA[0]*math.exp(-PARM_KBETA[2]*allcr[0]) +  PARM_KBETA[1]
 
-        errKcr = ERRPARM_KBETA[1]**2 + (math.exp(-PARM_KBETA[2]*allcr[0])*ERRPARM_KBETA[0])**2
-        errKcr += (PARM_KBETA[0]*allcr[0]*math.exp(-PARM_KBETA[2]*allcr[0])*ERRPARM_KBETA[2])**2 + (PARM_KBETA[0]*PARM_KBETA[2]*math.exp(-PARM_KBETA[2]*allcr[0])*allcr[1])**2
+        # parameter uncertainty: spread of K_beta over the bootstrap replicates of (A, Kinf, k)
+        A, Kinf, k = KBETA_BOOTSTRAP.T
+        errKcr = np.std(A*np.exp(-k*allcr[0]) + Kinf)**2
+        # uncertainty of the predicted crookedness, propagated through Eq. 2
+        errKcr += (PARM_KBETA[0]*PARM_KBETA[2]*math.exp(-PARM_KBETA[2]*allcr[0])*allcr[1])**2
         errKcr = math.sqrt(errKcr)
 
         allKcr = [Kcr, errKcr]
@@ -178,8 +187,8 @@ class Sequence:
         errinv = 0
 
         for k in range(10):
-            suminv += comp[k]*(1/KSTEPS[k])
-            errinv += (comp[k]*ERRKSTEPS[k]/KSTEPS[k]**2)**2
+            suminv += comp[k]*CSTEPS[k]
+            errinv += (comp[k]*ERRCSTEPS[k])**2
 
         errinv = math.sqrt(errinv)
 
